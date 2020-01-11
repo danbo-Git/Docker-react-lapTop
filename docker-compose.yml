@@ -1,0 +1,21 @@
+version: '3'  # Latest version: https://docs.docker.com/compose/compose-file/compose-versioning/
+services: # aka Dev Container being built using React for front end testing.
+  web-app:
+    build: # build from local Dir, must be launched from proper local directory.
+        context: . # Use . aka pwd 
+        dockerfile:  Dockerfile.dev # Use this specific dockerfile name
+    ports: 
+      - "3000:3000"  # Specify ports, <local:container>, Note "-" means array of items.
+    volumes:
+      - /app/node_modules
+      - .:/app
+
+  tests: # second continer to handle testing.
+    build: # build from local Dir, must be launched from proper local directory.
+        context: . # Use . aka pwd 
+        dockerfile:  Dockerfile.dev # Use this specific dockerfile name
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]  # Override default container commands
+  

@@ -1,0 +1,13 @@
+# Using .dev extension to distinguis Dev vs Prod Dockerfile
+FROM node:alpine
+
+WORKDIR /app
+
+# COPY package.json from project, provided by ReactJS into Dev Container.
+COPY package.json .
+RUN npm install
+
+# Copy the rest of the project files into the Dev Container
+COPY . . 
+
+CMD ["npm", "run", "start"]
